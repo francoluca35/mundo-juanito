@@ -1,0 +1,101 @@
+---
+import "../index.css";
+import { sections } from "../data/sections.js";
+import AaronWidget from "./aaron/AaronWidget.astro";
+import BrandMark from "./BrandMark.astro";
+import { whatsappLink } from "../lib/whatsapp";
+
+const {
+  title = "El Mundo de Juanito",
+  description = "Productos impresos en 3D: juguetes, material didáctico, piezas de robótica y diseño. También imprimimos a medida.",
+  pastel = false,
+} = Astro.props;
+const path = Astro.url.pathname;
+const aaronSection = sections.find((section) => path.includes(`/${section.slug}`))?.slug ?? "inicio";
+---
+
+<!doctype html>
+<html lang="es" class:list={{ pastel }}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content={pastel ? "#f6eee9" : "#fffaf0"} />
+    <title>{title} · El Mundo de Juanito</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <header class="site-header">
+      <BrandMark />
+      <button class="menu-button" aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span><span class="sr-only">Abrir menú</span>
+      </button>
+      <nav id="main-nav" class="main-nav" aria-label="Navegación principal">
+        {
+          sections.map((section) => (
+            <a class:list={{ active: path.includes(section.slug) }} href={`/${section.slug}/`}>
+              {section.label}
+            </a>
+          ))
+        }
+      </nav>
+      <a class="header-cta" href={whatsappLink("¡Hola! Quiero consultar por un producto impreso en 3D.")} target="_blank" rel="noopener noreferrer">
+        Pedí el tuyo <span>↗</span>
+      </a>
+    </header>
+    <main id="contenido">
+      <slot />
+    </main>
+    <footer id="contacto">
+      <div>
+        <p class="footer-kicker">¿Imprimimos algo juntos?</p>
+        <a href={whatsappLink("¡Hola! Quiero consultar por un producto impreso en 3D.")} target="_blank" rel="noopener noreferrer">
+          Escribinos por WhatsApp
+        </a>
+      </div>
+      <div class="footer-side">
+        <p>Diseñado e impreso en 3D,<br />pieza por pieza.</p>
+        <p><a href="mailto:hola@mundodejuanito.com">hola@mundodejuanito.com</a></p>
+        <a href="/">Volver al inicio ↑</a>
+      </div>
+    </footer>
+    <AaronWidget section={aaronSection} />
+    <script>
+      const header = document.querySelector<HTMLElement>(".site-header");
+      const button = document.querySelector(".menu-button");
+      const nav = document.querySelector(".main-nav");
+      button?.addEventListener("click", () => {
+        const open = button.getAttribute("aria-expanded") === "true";
+        button.setAttribute("aria-expanded", String(!open));
+        nav?.classList.toggle("open", !open);
+        if (!open) header?.classList.remove("is-hidden");
+      });
+
+      const scrollStopDelay = 220;
+      let scrollStopTimer = 0;
+      const updateHeaderOnScroll = () => {
+        if (!header) return;
+        const pastHeader = window.scrollY > header.offsetHeight;
+        const menuOpen = nav?.classList.contains("open") ?? false;
+        header.classList.toggle("is-solid", window.scrollY > 8);
+        header.classList.toggle("is-hidden", pastHeader && !menuOpen && !header.matches(":focus-within"));
+        window.clearTimeout(scrollStopTimer);
+        scrollStopTimer = window.setTimeout(() => header.classList.remove("is-hidden"), scrollStopDelay);
+      };
+      header?.classList.toggle("is-solid", window.scrollY > 8);
+      window.addEventListener("scroll", updateHeaderOnScroll, { passive: true });
+
+      const observer = new IntersectionObserver(
+        (entries) => entries.forEach((entry) => entry.target.classList.toggle("in-view", entry.isIntersecting)),
+        { threshold: 0.15 },
+      );
+      document.querySelectorAll("[data-reveal]").forEach((item) => observer.observe(item));
+    </script>
+  </body>
+</html>

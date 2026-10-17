@@ -1,0 +1,72 @@
+---
+import Layout from "../components/Layout.astro";
+import Icon from "../components/Icon.astro";
+import ProductCard from "../components/ProductCard.astro";
+import { sections } from "../data/sections.js";
+import { whatsappLink } from "../lib/whatsapp";
+
+export function getStaticPaths() {
+  return sections.map((section) => ({
+    params: { slug: section.slug },
+    props: { section },
+  }));
+}
+
+const { section } = Astro.props;
+const nextIndex = (sections.findIndex((item) => item.slug === section.slug) + 1) % sections.length;
+const next = sections[nextIndex];
+---
+
+<Layout title={section.label} description={section.description} pastel={section.pastel}>
+  <div
+    class:list={["category-page", { "design-page": section.pastel }]}
+    style={`--section-color:${section.color}; --ink:${section.ink}`}
+  >
+    <section class="category-hero">
+      <div class="category-title">
+        <p class="eyebrow">{section.number} — {section.eyebrow}</p>
+        <h1>{section.title}</h1>
+        <p>{section.description}</p>
+      </div>
+      <div class="category-stage" aria-hidden="true">
+        <span class="stage-label">{section.label}</span>
+        <div class="stage-shape shape-a"></div>
+        <div class="stage-shape shape-b"></div>
+        <Icon name={section.slug} size={220} />
+      </div>
+    </section>
+
+    <section class="manifesto" data-reveal>
+      <span>Por qué lo imprimimos</span>
+      <blockquote>“{section.manifesto}”</blockquote>
+    </section>
+
+    <section class="product-run">
+      <header data-reveal>
+        <p class="eyebrow">Productos impresos en 3D</p>
+        <h2>Para tocar,<br /><em>armar y usar.</em></h2>
+      </header>
+      <div class="product-grid">
+        {
+          section.products.map((product) => (
+            <ProductCard product={product} sectionSlug={section.slug} sectionLabel={section.label} />
+          ))
+        }
+      </div>
+      <p class="product-custom" data-reveal>
+        ¿Otra medida, otro color o algo distinto?
+        <a href={whatsappLink(`¡Hola! Quiero consultar por una impresión 3D a medida (${section.label}).`)} target="_blank" rel="noopener noreferrer">
+          También imprimimos a medida ↗
+        </a>
+      </p>
+    </section>
+
+    <section class="next-world" style={`--next:${next.color}`} data-reveal>
+      <p>Siguiente mundo</p>
+      <a href={`/${next.slug}/`}>
+        <span>{next.label}</span>
+        <b>↗</b>
+      </a>
+    </section>
+  </div>
+</Layout>

@@ -1,0 +1,39 @@
+---
+import Icon from "./Icon.astro";
+import { whatsappLink } from "../lib/whatsapp";
+
+interface Product {
+  name: string;
+  detail: string;
+  image?: string;
+}
+
+interface Props {
+  product: Product;
+  sectionSlug: string;
+  sectionLabel: string;
+}
+
+const { product, sectionSlug, sectionLabel } = Astro.props;
+const message = `¡Hola! Me interesa "${product.name}" (${sectionLabel}). ¿Me pasan más info?`;
+---
+
+<article class="product-card" data-reveal>
+  <div class="product-photo">
+    {
+      product.image ? (
+        <img src={product.image} alt={product.name} loading="lazy" decoding="async" />
+      ) : (
+        <>
+          <Icon name={sectionSlug} size={96} />
+          <span>Foto próximamente</span>
+        </>
+      )
+    }
+  </div>
+  <h3>{product.name}</h3>
+  <p>{product.detail}</p>
+  <a class="product-cta" href={whatsappLink(message)} target="_blank" rel="noopener noreferrer">
+    Consultar <span aria-hidden="true">↗</span>
+  </a>
+</article>

@@ -1,0 +1,10 @@
+{
+  "description": "Interactive multipage platform offering educational and creative content across didactic, Montessori, robotics, and design sections with vibrant and pastel themes.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

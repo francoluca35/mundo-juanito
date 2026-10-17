@@ -1,0 +1,93 @@
+export const sections = [
+  {
+    slug: "didactica",
+    label: "Didáctica",
+    eyebrow: "Material de aula impreso en 3D",
+    title: "Piezas que convierten la clase en experiencia.",
+    description:
+      "Material didáctico impreso en 3D para colegios y docentes: piezas para tocar, armar, medir y entender.",
+    color: "#ffca28",
+    ink: "#0a4b91",
+    number: "01",
+    products: [
+      { name: "Fracciones encastrables", detail: "Círculos y barras que se arman para ver, comparar y sumar fracciones." },
+      { name: "Sólidos geométricos", detail: "Cuerpos huecos y desarmables para contar caras, aristas y medir volumen." },
+      { name: "Modelos de ciencias", detail: "Células, moléculas y órganos en piezas grandes, pensadas para el aula." },
+      { name: "Mapas en relieve", detail: "Montañas, ríos y continentes que se recorren con los dedos." },
+    ],
+    manifesto: "Menos memorizar. Más tocar, probar, conversar y descubrir.",
+  },
+  {
+    slug: "montessori",
+    label: "Montessori",
+    eyebrow: "Materiales Montessori impresos",
+    title: "Materiales para aprender con las manos.",
+    description:
+      "Materiales Montessori impresos en 3D, con bordes suaves y piezas a la medida de las manos chicas.",
+    color: "#20b56c",
+    ink: "#073f43",
+    number: "02",
+    products: [
+      { name: "Encastres de formas", detail: "Tableros con piezas de agarre fácil para reconocer formas y tamaños." },
+      { name: "Cilindros con botón", detail: "Series de cilindros para ordenar por altura y diámetro." },
+      { name: "Letras y números en relieve", detail: "Para trazar con el dedo antes de escribir." },
+      { name: "Tablero de vida práctica", detail: "Roscas, trabas y botones para practicar autonomía." },
+    ],
+    manifesto: "La mano explora, la mente ordena y la confianza aparece.",
+  },
+  {
+    slug: "ninos",
+    label: "Niños",
+    eyebrow: "Juguetes impresos en 3D",
+    title: "Juguetes que se arman, se mueven y se inventan.",
+    description:
+      "Juguetes impresos en 3D para jugar, armar y regalar, con colores y nombres a elección.",
+    color: "#f34b45",
+    ink: "#092d68",
+    number: "03",
+    products: [
+      { name: "Animales articulados", detail: "Dragones, peces y dinosaurios flexibles, impresos en una sola pieza." },
+      { name: "Pistas de canicas", detail: "Módulos encastrables para diseñar recorridos cada vez más locos." },
+      { name: "Rompecabezas 3D", detail: "Desafíos de encastre para pensar con las manos." },
+      { name: "Llaveros y personajes con nombre", detail: "Personalizados con el nombre o el personaje favorito." },
+    ],
+    manifesto: "No hay una única respuesta cuando la pregunta es buena.",
+  },
+  {
+    slug: "robotica",
+    label: "Arduino + Robótica",
+    eyebrow: "Piezas para robótica",
+    title: "Las piezas que tu proyecto necesitaba.",
+    description:
+      "Carcasas, chasis, soportes y mecanismos impresos en 3D para proyectos de Arduino y robótica.",
+    color: "#179ed6",
+    ink: "#052f6d",
+    number: "04",
+    products: [
+      { name: "Carcasas para Arduino", detail: "Cajas a medida para placas, sensores y pantallas." },
+      { name: "Chasis de robots", detail: "Bases con lugar para motores, ruedas y batería." },
+      { name: "Soportes y brackets", detail: "Para fijar servos, motores y sensores donde los necesites." },
+      { name: "Engranajes y mecanismos", detail: "Para entender y armar transmisiones de movimiento." },
+    ],
+    manifesto: "Una idea, un cable, una línea de código: y de pronto, se mueve.",
+  },
+  {
+    slug: "diseno",
+    label: "Diseño",
+    eyebrow: "Diseño impreso en 3D",
+    title: "Del boceto a la pieza que tenés en la mano.",
+    description:
+      "Maquetas, prototipos, accesorios y objetos de diseño impresos en 3D para arquitectura, diseño e indumentaria.",
+    color: "#e7a9b6",
+    ink: "#40324d",
+    number: "05",
+    products: [
+      { name: "Maquetas de arquitectura", detail: "Volumetrías y piezas a escala para presentar proyectos." },
+      { name: "Prototipos de producto", detail: "Para probar forma, tamaño y uso antes de fabricar." },
+      { name: "Accesorios de indumentaria", detail: "Botones, hebillas y aros con diseño propio." },
+      { name: "Objetos de deco", detail: "Macetas, portalápices y piezas para el hogar." },
+    ],
+    manifesto: "Dibuja lo posible. Modela lo inesperado. Imprímelo.",
+    pastel: true,
+  },
+];

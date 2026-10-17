@@ -1,0 +1,364 @@
+---
+import { aaronBubble, isAaronSection } from "../../lib/aaronKnowledge";
+
+interface Props {
+	section?: string;
+}
+
+const { section = "inicio" } = Astro.props;
+const current = isAaronSection(section) ? section : "inicio";
+const bubble = aaronBubble(current);
+---
+
+<div class="aaron-root" data-aaron data-section={current}>
+	<button class="aaron-stage" type="button" data-open aria-expanded="false" aria-label="Hablar con Aarón">
+		<span class="aaron-greeting" aria-hidden="true">¡Hola! Soy Aarón, tu asistente 🐾</span>
+		<span class="aaron-placeholder" aria-hidden="true">🐾</span>
+		<canvas data-canvas></canvas>
+	</button>
+
+	<section class="aaron-chat" data-chat hidden aria-label="Chat con Aarón">
+		<header class="aaron-chat-header">
+			<div>
+				<strong>Aarón</strong>
+				<p>Te acompaño por El Mundo de Juanito</p>
+			</div>
+			<button type="button" data-close aria-label="Cerrar chat">×</button>
+		</header>
+
+		<div class="aaron-messages" data-messages aria-live="polite">
+			<p class="aaron-message assistant">
+				{bubble} Preguntame por un mundo o elegí una puerta.
+			</p>
+			<div class="aaron-chips">
+				<button type="button" data-chip="Busco ideas para el aula">Aula</button>
+				<button type="button" data-chip="Contame sobre Montessori">Montessori</button>
+				<button type="button" data-chip="Qué hay para niños">Niños</button>
+				<button type="button" data-chip="Quiero ver robótica y Arduino">Robótica</button>
+				<button type="button" data-chip="Me interesa diseño">Diseño</button>
+			</div>
+		</div>
+
+		<form class="aaron-form" data-form>
+			<input
+				data-input
+				type="text"
+				name="message"
+				maxlength="500"
+				autocomplete="off"
+				placeholder="Preguntame por un mundo"
+				aria-label="Escribí tu mensaje para Aarón"
+			/>
+			<button type="submit">Enviar</button>
+		</form>
+	</section>
+</div>
+
+<script>
+	const root = document.querySelector("[data-aaron]");
+	if (root instanceof HTMLElement && root.dataset.booted !== "true") {
+		root.dataset.booted = "true";
+		void import("./mountAaron").then(({ mountAaron }) => {
+			mountAaron(root);
+		});
+	}
+</script>
+
+<style>
+	.aaron-root {
+		position: fixed;
+		right: 0.5rem;
+		bottom: calc(0.25rem + env(safe-area-inset-bottom, 0px));
+		z-index: 26;
+		width: min(9.5rem, 32vw);
+		height: min(9.5rem, 32vw);
+		pointer-events: none;
+	}
+
+	.aaron-root.is-open {
+		z-index: 40;
+	}
+
+	.aaron-stage {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 100%;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		pointer-events: auto;
+		cursor: pointer;
+		touch-action: manipulation;
+		transform-origin: 50% 90%;
+		transition:
+			opacity 0.3s ease-out,
+			transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+			visibility 0s;
+	}
+
+	.aaron-root.is-open .aaron-stage {
+		visibility: hidden;
+		opacity: 0;
+		transform: scale(0.4) translateY(1.5rem);
+		pointer-events: none;
+		transition:
+			opacity 0.2s ease-in,
+			transform 0.25s ease-in,
+			visibility 0s 0.25s;
+	}
+
+	.aaron-stage canvas {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.aaron-greeting {
+		position: absolute;
+		right: 0.5rem;
+		bottom: calc(100% - 0.4rem);
+		width: max-content;
+		max-width: 11rem;
+		padding: 0.5rem 0.7rem;
+		border: 2px solid var(--deep-blue);
+		border-radius: 1rem;
+		background: #fff;
+		color: var(--deep-blue);
+		font: 800 0.8rem/1.3 "Nunito", sans-serif;
+		text-align: left;
+		box-shadow: 0 5px 0 rgba(7, 52, 111, 0.1);
+		animation: aaron-greeting-in 0.4s ease-out both;
+	}
+
+	.aaron-greeting::after {
+		content: "";
+		position: absolute;
+		right: 2.2rem;
+		bottom: -0.45rem;
+		width: 0.8rem;
+		height: 0.8rem;
+		border-right: 2px solid var(--deep-blue);
+		border-bottom: 2px solid var(--deep-blue);
+		background: #fff;
+		transform: rotate(45deg);
+	}
+
+	.aaron-root.is-open .aaron-greeting {
+		display: none;
+	}
+
+	@keyframes aaron-greeting-in {
+		from {
+			opacity: 0;
+			transform: translateY(0.35rem);
+		}
+	}
+
+	@keyframes aaron-greeting-out {
+		to {
+			visibility: hidden;
+			opacity: 0;
+			transform: translateY(0.35rem);
+		}
+	}
+
+	@media (max-width: 660px) {
+		.aaron-greeting {
+			max-width: 9.5rem;
+			font-size: 0.75rem;
+			animation:
+				aaron-greeting-in 0.4s ease-out both,
+				aaron-greeting-out 0.4s ease-in 6s forwards;
+		}
+	}
+
+	@keyframes aaron-chat-in {
+		from {
+			opacity: 0;
+			transform: translateY(0.75rem) scale(0.96);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.aaron-greeting,
+		.aaron-chat {
+			animation: none;
+		}
+
+		.aaron-stage,
+		.aaron-root.is-open .aaron-stage {
+			transition: none;
+		}
+	}
+
+	.aaron-placeholder {
+		position: absolute;
+		inset: 0;
+		display: grid;
+		place-items: center;
+		font-size: 2rem;
+	}
+
+	.aaron-stage.is-ready .aaron-placeholder {
+		display: none;
+	}
+
+	.aaron-chat {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		display: flex;
+		flex-direction: column;
+		width: min(22rem, calc(100vw - 1rem));
+		height: min(28rem, calc(100dvh - 1.5rem));
+		transform-origin: 100% 100%;
+		animation: aaron-chat-in 0.3s ease-out both;
+		overflow: hidden;
+		pointer-events: auto;
+		border: 2px solid var(--deep-blue);
+		border-radius: 1.3rem;
+		background: var(--paper);
+		color: var(--deep-blue);
+		box-shadow: 0 10px 0 rgba(7, 52, 111, 0.1);
+	}
+
+	.aaron-chat[hidden] {
+		display: none;
+	}
+
+	.aaron-chat-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+		padding: 0.65rem 0.8rem;
+		border-bottom: 2px solid rgba(7, 63, 132, 0.12);
+	}
+
+	.aaron-chat-header strong {
+		font: 800 1.15rem/1 "Baloo 2", sans-serif;
+	}
+
+	.aaron-chat-header p {
+		margin: 0.25rem 0 0;
+		color: #4d6490;
+		font-size: 0.75rem;
+		font-weight: 700;
+	}
+
+	.aaron-chat-header button,
+	.aaron-form button,
+	.aaron-chips button {
+		border: 2px solid var(--deep-blue);
+		background: #fff;
+		color: var(--deep-blue);
+		font: 800 0.75rem/1 "Nunito", sans-serif;
+		cursor: pointer;
+	}
+
+	.aaron-chat-header button {
+		display: grid;
+		width: 2.25rem;
+		height: 2.25rem;
+		place-items: center;
+		border-radius: 999px;
+		font-size: 1.2rem;
+	}
+
+	.aaron-messages {
+		flex: 1;
+		min-height: 0;
+		overflow-y: auto;
+		padding: 0.75rem;
+	}
+
+	.aaron-message {
+		width: fit-content;
+		max-width: 92%;
+		margin: 0 0 0.5rem;
+		padding: 0.65rem 0.75rem;
+		border-radius: 0.9rem;
+		font-size: 0.9rem;
+		font-weight: 700;
+		line-height: 1.45;
+	}
+
+	.aaron-message.assistant {
+		border: 2px solid rgba(7, 63, 132, 0.14);
+		background: #fff;
+	}
+
+	.aaron-message.user {
+		margin-left: auto;
+		background: var(--yellow);
+	}
+
+	.aaron-link {
+		display: inline-block;
+		margin-top: 0.35rem;
+		font-weight: 800;
+		text-decoration: underline;
+		text-underline-offset: 0.15rem;
+	}
+
+	.aaron-chips {
+		display: flex;
+		gap: 0.35rem;
+		overflow-x: auto;
+		padding: 0.15rem 0 0.15rem;
+	}
+
+	.aaron-chips button {
+		flex: 0 0 auto;
+		padding: 0.45rem 0.7rem;
+		border-radius: 999px;
+		background: #fff;
+	}
+
+	.aaron-form {
+		display: flex;
+		gap: 0.4rem;
+		padding: 0.75rem;
+		border-top: 2px solid rgba(7, 63, 132, 0.12);
+	}
+
+	.aaron-form input {
+		min-width: 0;
+		flex: 1;
+		padding: 0.75rem 0.85rem;
+		border: 2px solid rgba(7, 63, 132, 0.25);
+		border-radius: 999px;
+		background: #fff;
+		color: var(--deep-blue);
+		font: 700 1rem/1.2 "Nunito", sans-serif;
+	}
+
+	.aaron-form button {
+		padding: 0.75rem 0.9rem;
+		border-radius: 999px;
+		background: var(--deep-blue);
+		color: #fff;
+	}
+
+	.aaron-form button:disabled,
+	.aaron-form input:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
+
+	.aaron-root button:focus-visible,
+	.aaron-form input:focus-visible {
+		outline: 3px solid var(--yellow);
+		outline-offset: 2px;
+	}
+
+</style>
+
+<style is:global>
+	@media (min-width: 700px) {
+		body:has(.aaron-root) .footer-side {
+			padding-right: 12rem;
+		}
+	}
+</style>

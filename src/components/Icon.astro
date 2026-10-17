@@ -1,0 +1,64 @@
+---
+const { name, size = 96 } = Astro.props;
+---
+
+<svg
+  class="section-icon"
+  width={size}
+  height={size}
+  viewBox="0 0 120 120"
+  fill="none"
+  aria-hidden="true"
+>
+  {
+    name === "didactica" && (
+      <>
+        <path d="M20 35 60 18l40 17-40 18-40-18Z" fill="currentColor" stroke="var(--ink)" stroke-width="5" stroke-linejoin="round" />
+        <path d="M34 48v27c10 13 40 13 51 0V48" stroke="var(--ink)" stroke-width="5" stroke-linecap="round" />
+        <path d="M100 37v31" stroke="var(--ink)" stroke-width="5" stroke-linecap="round" />
+        <circle cx="100" cy="75" r="7" fill="#f34b45" stroke="var(--ink)" stroke-width="4" />
+      </>
+    )
+  }
+  {
+    name === "montessori" && (
+      <>
+        <path d="M27 91V47h66v44" stroke="var(--ink)" stroke-width="6" stroke-linecap="round" />
+        <path d="M39 47V30h42v17M47 91V63h26v28" stroke="var(--ink)" stroke-width="6" stroke-linejoin="round" />
+        <circle cx="52" cy="76" r="3" fill="var(--ink)" />
+        <path d="M18 91h84" stroke="var(--ink)" stroke-width="6" stroke-linecap="round" />
+        <path d="m50 30 10-12 10 12" fill="currentColor" stroke="var(--ink)" stroke-width="5" stroke-linejoin="round" />
+      </>
+    )
+  }
+  {
+    name === "ninos" && (
+      <>
+        <path d="M22 74c4-15 17-23 30-18l7-25 13 23c15-5 27 5 29 20 2 17-16 28-29 18-7 10-20 10-27 0-12 8-27-2-23-18Z" fill="currentColor" stroke="var(--ink)" stroke-width="5" stroke-linejoin="round" />
+        <circle cx="45" cy="73" r="5" fill="var(--ink)" />
+        <circle cx="77" cy="73" r="5" fill="var(--ink)" />
+        <path d="M51 84c6 6 13 6 20 0" stroke="var(--ink)" stroke-width="4" stroke-linecap="round" />
+      </>
+    )
+  }
+  {
+    name === "robotica" && (
+      <>
+        <rect x="23" y="35" width="74" height="62" rx="15" fill="currentColor" stroke="var(--ink)" stroke-width="5" />
+        <path d="M60 35V20m-7 0h14" stroke="var(--ink)" stroke-width="5" stroke-linecap="round" />
+        <circle cx="45" cy="62" r="7" fill="white" stroke="var(--ink)" stroke-width="4" />
+        <circle cx="76" cy="62" r="7" fill="white" stroke="var(--ink)" stroke-width="4" />
+        <path d="M44 80h33M23 57H13m94 0H97" stroke="var(--ink)" stroke-width="5" stroke-linecap="round" />
+      </>
+    )
+  }
+  {
+    name === "diseno" && (
+      <>
+        <path d="M24 96 59 20l37 76H24Z" fill="currentColor" stroke="var(--ink)" stroke-width="5" stroke-linejoin="round" />
+        <path d="M42 77h35L59 40 42 77Z" fill="#fffaf5" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round" />
+        <path d="M23 96h75" stroke="var(--ink)" stroke-width="6" stroke-linecap="round" />
+      </>
+    )
+  }
+</svg>

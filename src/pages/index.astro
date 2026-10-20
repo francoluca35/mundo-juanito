@@ -1,6 +1,7 @@
 ---
 import Layout from "../components/Layout.astro";
 import Icon from "../components/Icon.astro";
+import HeroShowcase from "../components/HeroShowcase.astro";
 import { sections } from "../data/sections.js";
 import { whatsappLink } from "../lib/whatsapp";
 
@@ -12,39 +13,7 @@ const printSteps = [
 ---
 
 <Layout title="Productos impresos en 3D">
-  <section class="home-hero">
-    <div class="hero-copy">
-      <p class="eyebrow">Impresión 3D que enseña</p>
-      <h1>Ideas que<br />se pueden <em>tocar.</em></h1>
-      <p class="hero-intro">
-        Diseñamos e imprimimos en 3D juguetes, material didáctico, piezas de robótica y objetos de diseño. Elegí un
-        producto o traenos tu idea.
-      </p>
-      <a class="round-link" href="#explorar">
-        <span>Ver<br />productos</span>
-        <b>↓</b>
-      </a>
-    </div>
-    <div class="hero-machine" aria-hidden="true">
-      <div class="orbit orbit-one"></div>
-      <div class="orbit orbit-two"></div>
-      <img
-        class="hero-logo"
-        src="/logo.webp"
-        srcset="/logo-256.webp 256w, /logo.webp 640w"
-        sizes="(max-width: 660px) 280px, (max-width: 1050px) 300px, 400px"
-        alt=""
-        width="640"
-        height="631"
-        decoding="async"
-        fetchpriority="high"
-      />
-      <span class="floating-symbol symbol-plus">+</span>
-      <span class="floating-symbol symbol-code">&lt;/&gt;</span>
-      <span class="floating-symbol symbol-gear">✣</span>
-      <p class="orbit-note">impreso capa por capa</p>
-    </div>
-  </section>
+  <HeroShowcase />
 
   <section id="explorar" class="worlds">
     <header class="section-heading" data-reveal>

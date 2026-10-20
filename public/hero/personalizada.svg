@@ -1,0 +1,9 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" role="img" aria-label="Placeholder personalizada">
+  <rect width="720" height="720" rx="48" fill="#fdeceb"/>
+  <rect x="170" y="150" width="380" height="320" rx="24" fill="none" stroke="#07346f" stroke-width="22"/>
+  <rect x="220" y="360" width="280" height="40" rx="10" fill="#d9e2ef"/>
+  <rect x="300" y="280" width="120" height="90" rx="16" fill="#f34b45"/>
+  <rect x="330" y="200" width="60" height="50" rx="12" fill="#ffca28"/>
+  <circle cx="520" y="220" r="48" fill="none" stroke="#f34b45" stroke-width="22"/>
+  <text x="360" y="620" text-anchor="middle" font-family="Nunito, Arial, sans-serif" font-size="28" font-weight="800" fill="#07346f" opacity="0.55">personalizada.webp</text>
+</svg>

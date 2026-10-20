@@ -187,6 +187,271 @@ main {
   padding: 4rem 5vw 5rem;
 }
 
+.hero-carousel {
+  position: relative;
+  height: 100dvh;
+  min-height: 100dvh;
+  margin-top: calc(var(--header-height) * -1);
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.hero-carousel-track {
+  position: relative;
+  height: 100%;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 560ms ease,
+    visibility 0s linear 560ms;
+  pointer-events: none;
+}
+
+.hero-slide.is-active {
+  z-index: 1;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+.hero-slide:not(.is-active) .hero-scene-glow,
+.hero-slide:not(.is-active) .hero-scene-grid,
+.hero-slide:not(.is-active) .hero-figure {
+  animation-play-state: paused !important;
+}
+
+.hero-carousel-dots {
+  z-index: 4;
+}
+
+.hero-scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 78% 42%, color-mix(in srgb, var(--slide-color), white 42%), transparent 34%),
+    radial-gradient(circle at 60% 70%, color-mix(in srgb, var(--slide-color), transparent 70%), transparent 40%),
+    linear-gradient(145deg, #fff8ec 0%, color-mix(in srgb, var(--slide-color), white 78%) 48%, color-mix(in srgb, var(--paper), var(--slide-color) 12%) 100%);
+}
+
+.hero-scene-glow {
+  position: absolute;
+  top: 18%;
+  right: 8%;
+  width: min(48vw, 520px);
+  height: min(48vw, 520px);
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--slide-color), white 20%), transparent 68%);
+  animation: hero-glow 7s ease-in-out infinite;
+}
+
+.hero-scene-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.22;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--deep-blue), transparent 88%) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--deep-blue), transparent 88%) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at 72% 45%, black 18%, transparent 68%);
+  animation: hero-grid 18s linear infinite;
+}
+
+.hero-figure {
+  position: absolute;
+  top: 50%;
+  right: 4%;
+  z-index: 2;
+  width: min(44vw, 520px);
+  margin: 0;
+  transform: translateY(-48%);
+  pointer-events: none;
+  animation: hero-figure-in 700ms ease both;
+}
+
+.hero-slide.is-active .hero-figure {
+  animation-delay: 80ms;
+}
+
+.hero-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  filter: drop-shadow(0 28px 40px color-mix(in srgb, var(--deep-blue), transparent 82%));
+}
+
+.hero-scene-audience {
+  margin: 0.85rem 0 0;
+  color: var(--deep-blue);
+  font: 800 0.72rem/1 "Nunito", sans-serif;
+  letter-spacing: 0.16em;
+  text-align: center;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.hero-slide-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--paper), white 35%) 0%, color-mix(in srgb, var(--paper), transparent 8%) 38%, transparent 62%),
+    linear-gradient(0deg, color-mix(in srgb, var(--paper), transparent 40%) 0%, transparent 30%);
+  pointer-events: none;
+}
+
+@keyframes hero-glow {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+@keyframes hero-grid {
+  to { background-position: 42px 42px; }
+}
+
+@keyframes hero-figure-in {
+  from { opacity: 0; transform: translateY(-42%) scale(0.96); }
+  to { opacity: 1; transform: translateY(-48%) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-scene-glow,
+  .hero-scene-grid,
+  .hero-figure {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero-figure {
+    top: 36%;
+    right: 50%;
+    width: min(72vw, 340px);
+    transform: translate(50%, -52%);
+  }
+
+  .hero-slide.is-active .hero-figure,
+  .hero-figure {
+    animation-name: hero-figure-in-mobile;
+  }
+
+  .hero-slide-copy {
+    justify-content: flex-end;
+    padding-bottom: 5.5rem;
+  }
+
+  .hero-slide-scrim {
+    background:
+      linear-gradient(0deg, color-mix(in srgb, var(--paper), white 20%) 0%, color-mix(in srgb, var(--paper), transparent 25%) 42%, transparent 70%);
+  }
+}
+
+@keyframes hero-figure-in-mobile {
+  from { opacity: 0; transform: translate(50%, -46%) scale(0.96); }
+  to { opacity: 1; transform: translate(50%, -52%) scale(1); }
+}
+
+.hero-slide-copy {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 1440px;
+  height: 100%;
+  margin: 0 auto;
+  padding: calc(var(--header-height) + 2rem) 5vw 4rem;
+}
+
+.hero-slide-copy .eyebrow {
+  color: var(--blue);
+}
+
+.hero-slide-copy h1 {
+  max-width: 720px;
+  margin: 0;
+  color: var(--deep-blue);
+  font-size: clamp(3.4rem, 7vw, 6.8rem);
+  font-weight: 800;
+  letter-spacing: -0.07em;
+  line-height: 0.82;
+}
+
+.hero-slide-copy .hero-intro {
+  max-width: 470px;
+  margin: 1.8rem 0 2rem;
+  color: #34537b;
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  width: fit-content;
+  border: 2px solid var(--deep-blue);
+  border-radius: 999px;
+  background: white;
+  padding: 0.55rem 0.55rem 0.55rem 1.35rem;
+  color: var(--deep-blue);
+  font: 800 0.9rem/1 "Nunito", sans-serif;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  transition: transform 200ms ease, background 200ms ease;
+}
+
+.hero-cta span {
+  display: grid;
+  width: 2.6rem;
+  height: 2.6rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--coral);
+  color: white;
+  font-size: 1.05rem;
+}
+
+.hero-cta:hover {
+  background: var(--yellow);
+  transform: translateY(-2px);
+}
+
+.hero-carousel-dots {
+  position: absolute;
+  bottom: 1.4rem;
+  left: 50%;
+  z-index: 3;
+  display: flex;
+  gap: 0.55rem;
+  transform: translateX(-50%);
+}
+
+.hero-carousel-dots button {
+  width: 0.65rem;
+  height: 0.65rem;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--deep-blue), white 55%);
+  cursor: pointer;
+  transition: width 200ms ease, background 200ms ease;
+}
+
+.hero-carousel-dots button.is-active {
+  width: 1.6rem;
+  background: var(--coral);
+}
+
 .eyebrow {
   margin: 0 0 1.1rem;
   color: var(--blue);
@@ -255,98 +520,6 @@ h2 em {
 
 .round-link:hover {
   transform: rotate(-3deg) scale(1.03);
-}
-
-.hero-machine {
-  position: relative;
-  min-height: 580px;
-  overflow-x: clip;
-}
-
-.hero-logo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 5;
-  width: min(40vw, 400px);
-  filter: drop-shadow(0 14px 0 rgba(7, 63, 132, 0.08));
-  height: auto;
-  transform: translate(-50%, -50%) rotate(-3deg);
-  animation: float 4s ease-in-out infinite;
-}
-
-.orbit {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  border: 2px dashed rgba(7, 63, 132, 0.35);
-  border-radius: 50%;
-  transform: translate(-50%, -50%) rotate(-17deg);
-}
-
-.orbit-one {
-  width: min(46vw, 610px);
-  height: 390px;
-}
-
-.orbit-two {
-  width: min(33vw, 440px);
-  height: 540px;
-  transform: translate(-50%, -50%) rotate(58deg);
-}
-
-.floating-symbol {
-  position: absolute;
-  z-index: 4;
-  display: grid;
-  place-items: center;
-  color: white;
-  font-family: "Baloo 2";
-  font-weight: 800;
-  box-shadow: 0 12px 0 rgba(7, 63, 132, 0.09);
-  animation: bob 3s ease-in-out infinite alternate;
-}
-
-.symbol-plus {
-  top: 15%;
-  right: 14%;
-  width: 78px;
-  height: 78px;
-  transform: rotate(12deg);
-  border-radius: 24% 55% 33% 48%;
-  background: var(--coral);
-  font-size: 2.7rem;
-}
-
-.symbol-code {
-  bottom: 13%;
-  left: 8%;
-  width: 116px;
-  height: 66px;
-  border-radius: 999px;
-  background: var(--sky);
-  font-size: 1.3rem;
-  animation-delay: -1s;
-}
-
-.symbol-gear {
-  top: 14%;
-  left: 10%;
-  color: var(--green);
-  font-size: 5.8rem;
-  box-shadow: none;
-  animation-delay: -2s;
-}
-
-.orbit-note {
-  position: absolute;
-  right: 3%;
-  bottom: 15%;
-  transform: rotate(-8deg);
-  color: var(--blue);
-  font: 700 0.8rem "Nunito";
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
 }
 
 .worlds {
@@ -909,12 +1082,6 @@ footer > div > a {
   transform: none;
 }
 
-@keyframes float {
-  0%,
-  100% { transform: translate(-50%, -50%) rotate(-3deg); }
-  50% { transform: translate(-50%, calc(-50% - 14px)) rotate(1deg); }
-}
-
 .category-stage .section-icon {
   animation-name: icon-float;
 }
@@ -925,9 +1092,6 @@ footer > div > a {
   50% { transform: translateY(-16px) rotate(3deg); }
 }
 
-@keyframes bob {
-  to { transform: translateY(-14px) rotate(-4deg); }
-}
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -996,30 +1160,9 @@ footer > div > a {
     padding: 0.8rem;
   }
 
-  .home-hero,
   .category-hero {
     min-height: auto;
     grid-template-columns: 1fr;
-  }
-
-  .home-hero {
-    padding-top: 5rem;
-  }
-
-  .hero-machine {
-    min-height: 510px;
-  }
-
-  .hero-logo {
-    width: min(300px, 78vw);
-  }
-
-  .orbit-one {
-    width: 80vw;
-  }
-
-  .orbit-two {
-    width: 62vw;
   }
 
   .world-row {
@@ -1039,29 +1182,16 @@ footer > div > a {
 }
 
 @media (max-width: 660px) {
-  .home-hero,
   .category-hero {
     padding: 4rem 1.25rem;
   }
 
-  .hero-copy h1 {
-    font-size: clamp(3.5rem, 17vw, 5rem);
+  .hero-slide-copy {
+    padding: calc(var(--header-height) + 1.5rem) 1.25rem 3.5rem;
   }
 
-  .hero-machine {
-    min-height: 420px;
-  }
-
-  .orbit-one {
-    height: 290px;
-  }
-
-  .orbit-two {
-    height: 380px;
-  }
-
-  .symbol-plus {
-    right: 0;
+  .hero-slide-copy h1 {
+    font-size: clamp(3.1rem, 14vw, 4.6rem);
   }
 
   .worlds {

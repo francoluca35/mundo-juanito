@@ -1,0 +1,10 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" role="img" aria-label="Placeholder cognitivas">
+  <rect width="720" height="720" rx="48" fill="#e8f8ef"/>
+  <circle cx="360" cy="320" r="90" fill="#20b56c"/>
+  <circle cx="220" cy="220" r="42" fill="#ffca28"/>
+  <circle cx="500" cy="230" r="38" fill="#f34b45"/>
+  <circle cx="500" cy="420" r="36" fill="#179ed6"/>
+  <circle cx="230" cy="430" r="40" fill="#07346f"/>
+  <path d="M300 280 L240 240 M410 280 L470 250 M410 360 L470 400 M300 360 L250 410" stroke="#07346f" stroke-width="14" stroke-linecap="round" opacity="0.35" fill="none"/>
+  <text x="360" y="620" text-anchor="middle" font-family="Nunito, Arial, sans-serif" font-size="28" font-weight="800" fill="#07346f" opacity="0.55">cognitivas.webp</text>
+</svg>
